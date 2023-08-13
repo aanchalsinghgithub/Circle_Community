@@ -4,7 +4,6 @@ const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const { readdirSync } = require("fs");
 const dotenv = require("dotenv");
-const path = require("path");
 
 dotenv.config();
 
@@ -26,16 +25,6 @@ mongoose
   })
   .then(() => console.log("database connected successfully"))
   .catch((err) => console.log("error connecting to mongodb", err));
-
-app.use(express.static(path.join(__dirname, "./frontend/build")));
-app.get("*", function (_, res) {
-  res.sendFile(
-    path.join(__dirname, "./frontend/build/index.html"),
-    function (err) {
-      res.status(500).send(err);
-    }
-  );
-});
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
